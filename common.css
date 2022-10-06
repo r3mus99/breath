@@ -1,0 +1,114 @@
+body,
+html {
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: black;
+}
+
+.hidden {
+    opacity: 0;
+    transition: all 3s;
+}
+
+.visible {
+    opacity: 1;
+    transition: all 3s;
+}
+
+.controls {
+    position: absolute;
+    left: 16px;
+    top: 16px;
+
+    display: flex;
+    flex-direction: column;
+
+    width: 280px;
+
+    color: white;
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+    transition: opacity 11s;
+}
+
+.controls .counter {
+    cursor: pointer;
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid white;
+    border-radius: 5px;
+    height: 35px;
+    line-height: 35px;
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 16px;
+}
+
+.circle {
+    border-radius: 100%;
+    height: min(25vw, 25vh);
+    width: min(25vw, 25vh);
+}
+
+.circle.animated {
+    animation-name: breath;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+}
+
+.intro {
+    animation-name: fadeIn;
+    animation-duration: 5s;
+}
+
+@keyframes fadeIn {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+        filter: blur(2px);
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.step {
+    padding: 12px;
+    margin-bottom: 4px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+    display: flex;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    font-size: 1rem;
+}
+
+.step .title {
+    flex-grow: 1;
+}
+
+.step .duration {
+    height: 5px;
+    background: white;
+    border-radius: 5px;
+    margin: 5px 10px;
+}
+
+/* maybe later */
+.circle2 {
+    border-radius: 100%;
+    height: min(25vw, 25vh);
+    width: min(25vw, 25vh);
+
+    position: absolute;
+
+    left: 595px;
+    top: 387px;
+
+    background: linear-gradient(48.6deg, rgba(66, 185, 223, 0.2) 14.05%, rgba(240, 115, 87, 0.2) 84.32%);
+}

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="sk">
+
+<head>
+    <meta charset="utf-8">
+    <title>Whisky</title>
+
+    <link rel="stylesheet" href="../common.css">
+    <link rel="stylesheet" href="whisky.css">
+    <script defer src="whisky.js"></script>
+</head>
+
+<body>
+  <div class="controls hidden" id="controls">
+    <div class="counter" id="count" onclick={resetCounter()}></div>
+      <div class="step" id="step1">
+          <div class="title">nádych</div>
+          <div class="duration w40"></div>
+          4s
+      </div>
+      <div class="step" id="step2">
+          <div class="title">zadržať</div>
+          <div class="duration w70"></div>
+          7s
+      </div>
+      <div class="step" id="step3">
+          <div class="title">výdych</div>
+          <div class="duration w80"></div>
+          8s
+      </div>
+  </div>
+  <div class="circle intro" id="circle"></div>
+</body>
+
+</html>
