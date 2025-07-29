@@ -32,7 +32,8 @@ This project also served as a personal exercise in building a fully functional w
 
 ## 🚀 Live Demo
 
-🔗 *Coming soon via GitHub Pages*  
+🔗 
+The app is hosted on 👉 [**GitHub Pages**](https://r3mus99.github.io/breath//)
 (Bookmark it in your browser for quick access.)
 
 ## 🤍 Why
