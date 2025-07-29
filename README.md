@@ -3,6 +3,8 @@
 **Breath** is a lightweight and distraction-free breathing exercise app built with pure HTML, CSS, and JavaScript.  
 No frameworks. No dependencies. Just calm.
 
+![Screenshot](./breath3.png)
+
 ## ✨ About
 
 This minimalist app was created with one goal:  
