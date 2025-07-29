@@ -1,8 +1,3 @@
-.circle {
-    background-color: rgba(173, 216, 230, 0.20);
-    border: 2px solid lightblue;
-}
-
 .circle.animated {
     animation-duration: 11s;
 }
@@ -10,8 +5,6 @@
 @keyframes breath {
     50% {
         transform: scale(2.0);
-        border: 2px solid darksalmon;
-        background-color: rgba(233, 150, 122, 0.20); /* darksalmon */
     }
 }
 
@@ -26,13 +19,6 @@
     animation-iteration-count: infinite;
 }
 
-@keyframes inhale {
-    50% {
-        border-color: darksalmon;
-        background-color: rgba(233, 150, 122, 0.20); /* darksalmon */
-    }
-}
-
 .step.animate-exhale {
     animation-name: exhale;
     animation-duration: 11s;
@@ -41,9 +27,26 @@
     animation-iteration-count: infinite;
 }
 
+@keyframes inhale {
+    0%, 60%, 100% {
+        color: var(--inactive-color);
+        background-color: transparent;
+    }
+
+    10%, 50% {
+        color: var(--text-color);
+        background-color: var(--dark-accent);
+    }
+}
+
 @keyframes exhale {
-    50% {
-        border-color: lightblue;
-        background-color: rgba(173, 216, 230, 0.20); /* lightblue */
+    0%, 60%, 100% {
+        color: var(--inactive-color);
+        background-color: transparent;
+    }
+
+    10%, 50% {
+        color: var(--text-color);
+        background-color: var(--dark-accent);
     }
 }

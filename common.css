@@ -1,3 +1,12 @@
+:root {
+    --bg-color: #1e1e28;
+    --text-color: #fefefe;
+    --inactive-color: #3a3a47;
+    --accent-color: #BB90E9;
+    --dark-accent: #5F31A2;
+    --circle-fill: linear-gradient(20deg, #773DB9, #5F31A2);
+}
+
 body,
 html {
     height: 100%;
@@ -8,17 +17,18 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #0e1117;
+    background-color: var(--bg-color);
+    font-family: 'Inter', sans-serif;
 }
 
 .hidden {
     opacity: 0;
-    transition: all 3s;
+    transition: all 1s;
 }
 
 .visible {
     opacity: 1;
-    transition: all 3s;
+    transition: all 1s;
 }
 
 .controls {
@@ -29,30 +39,32 @@ body {
     display: flex;
     flex-direction: column;
 
-    width: 280px;
+    width: 240px;
 
-    color: white;
+    color: var(--text-color);
     font-family: Roboto, Helvetica, Arial, sans-serif;
-    transition: opacity 11s;
+    transition: opacity 5s;
 }
 
 .controls .counter {
+    background-color: var(--accent-color);
     cursor: pointer;
-    padding: 12px;
-    background: rgba(255, 255, 255, 0.2);
-    border: 1px solid white;
-    border-radius: 5px;
-    height: 35px;
-    line-height: 35px;
+    height: 3rem;
+    line-height: 3rem;
     text-align: center;
-    font-size: 2rem;
-    margin-bottom: 16px;
+    font-size: 3rem;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    margin-bottom: 1.5rem;
 }
 
 .circle {
     border-radius: 100%;
     height: min(25vw, 25vh);
     width: min(25vw, 25vh);
+
+    background: var(--circle-fill);
+    border: 0.25rem solid var(--accent-color);
 }
 
 .circle.animated {
@@ -81,10 +93,8 @@ body {
 .step {
     padding: 12px;
     margin-bottom: 4px;
-    background: rgba(255, 255, 255, 0.2);
     border-radius: 5px;
     display: flex;
-    border: 1px solid rgba(255, 255, 255, 0.2);
     font-size: 1rem;
 }
 
@@ -94,21 +104,7 @@ body {
 
 .step .duration {
     height: 5px;
-    background: white;
+    background: rgba(255, 255, 255, 0.2);
     border-radius: 5px;
-    margin: 5px 10px;
-}
-
-/* maybe later */
-.circle2 {
-    border-radius: 100%;
-    height: min(25vw, 25vh);
-    width: min(25vw, 25vh);
-
-    position: absolute;
-
-    left: 595px;
-    top: 387px;
-
-    background: linear-gradient(48.6deg, rgba(66, 185, 223, 0.2) 14.05%, rgba(240, 115, 87, 0.2) 84.32%);
+    margin: 7px 10px;
 }
