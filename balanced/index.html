@@ -6,8 +6,65 @@
     <title>Water</title>
 
     <link rel="stylesheet" href="../common.css">
-    <link rel="stylesheet" href="water.css">
-    <script defer src="water.js"></script>
+    <style>
+        .circle.animated {
+            animation-duration: 11s;
+        }
+
+        @keyframes breath {
+            50% {
+                transform: scale(2.0);
+            }
+        }
+
+        .step .duration.animate55 {
+            animation-name: change-width55;
+            animation-duration: 11s;
+            animation-timing-function: ease-in-out;
+            animation-iteration-count: infinite;
+        }
+
+        .animation-delay55 {
+            animation-delay: 5.5s;
+        }
+
+
+        @keyframes change-width55 {
+            0% {
+                opacity: 1;
+                width: 0;
+            }
+
+            50% {
+                opacity: 1;
+                width: 100px;
+            }
+
+            60%, 100% {
+                opacity: 0;
+                width: 100px;
+            }
+        }
+
+        .step.animate-color {
+            animation-name: change-color;
+            animation-duration: 11s;
+            animation-timing-function: ease-in-out;
+            animation-iteration-count: infinite;
+        }
+
+        @keyframes change-color {
+            0%, 60%, 100% {
+                /*color: var(--inactive-color);*/
+                background-color: transparent;
+            }
+
+            10%, 50% {
+                /*color: var(--text-color);*/
+                background-color: var(--dark-accent);
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -25,6 +82,40 @@
       </div>
   </div>
   <div class="circle animated" id="circle"></div>
+  <script>
+      let counter = 0;
+      let interval = undefined;
+
+      function count() {
+          document.getElementById("count").textContent = counter;
+          counter++;
+      }
+
+      function resetCounter() {
+          // reset circle animation
+          // todo reflow step and duration
+          const e = document.getElementById("circle");
+          e.style.animation = 'none';
+          e.offsetHeight; /* trigger reflow */
+          e.style.animation = null;
+
+          // reset steps animation
+          Array.from(document.getElementsByClassName("step")).forEach(step => {
+              step.style.animation = 'none';
+              step.offsetHeight; /* trigger reflow */
+              step.style.animation = null;
+          })
+
+          // reset counter
+          counter = 0;
+          clearInterval(interval);
+          count();
+          interval = setInterval(count, 11000);
+      }
+
+      count();
+      interval = setInterval(count, 11000);
+  </script>
 </body>
 
 </html>

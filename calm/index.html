@@ -4,32 +4,211 @@
 <head>
     <meta charset="utf-8">
     <title>Whisky</title>
-
     <link rel="stylesheet" href="../common.css">
-    <link rel="stylesheet" href="whisky.css">
-    <script defer src="whisky.js"></script>
+    <style>
+        .circle.animated {
+            animation-duration: 19s;
+        }
+
+        @keyframes breath {
+            21% {
+                transform: scale(2.0);
+            }
+
+            58% {
+                transform: scale(2.0);
+            }
+        }
+
+        #step1 .duration {
+            animation-name: change-step1;
+            animation-duration: 19s;
+            animation-timing-function: ease-in-out;
+            animation-iteration-count: infinite;
+        }
+
+        @keyframes change-step1 {
+            0% {
+                opacity: 1;
+                width: 0;
+            }
+
+            21% {
+                opacity: 1;
+                width: 100px;
+            }
+
+            26%, 100% {
+                opacity: 0;
+                width: 100px;
+            }
+        }
+
+        #step2 .duration {
+            animation-name: change-step2;
+            animation-duration: 19s;
+            animation-timing-function: ease-in-out;
+            animation-iteration-count: infinite;
+        }
+
+        @keyframes change-step2 {
+            0%, 21% {
+                opacity: 1;
+                width: 0;
+            }
+
+            58% {
+                opacity: 1;
+                width: 100px;
+            }
+
+            63%, 100% {
+                opacity: 0;
+                width: 100px;
+            }
+        }
+
+        #step3 .duration {
+            animation-name: change-step3;
+            animation-duration: 19s;
+            animation-timing-function: ease-in-out;
+            animation-iteration-count: infinite;
+        }
+
+        @keyframes change-step3 {
+            0%, 58% {
+                opacity: 1;
+                width: 0;
+            }
+
+            95% {
+                opacity: 1;
+                width: 100px;
+            }
+
+            100% {
+                opacity: 0;
+                width: 100px;
+            }
+        }
+
+
+        .step.animate-inhale {
+            animation-name: inhale;
+            animation-duration: 19s;
+            animation-timing-function: ease-in-out;
+            animation-iteration-count: infinite;
+        }
+
+        @keyframes inhale {
+            0%, 26%, 58%, 100% {
+                color: var(--inactive-color);
+                background-color: transparent;
+            }
+
+            5%, 21% {
+                color: var(--text-color);
+                background-color: var(--dark-accent);
+            }
+        }
+
+        .step.animate-hold {
+            animation-name: hold;
+            animation-duration: 19s;
+            animation-timing-function: ease-in-out;
+            animation-iteration-count: infinite;
+        }
+
+        @keyframes hold {
+            0%, 21%, 63%, 100% {
+                color: var(--inactive-color);
+                background-color: transparent;
+            }
+
+            26%, 58% {
+                color: var(--text-color);
+                background-color: var(--dark-accent);
+            }
+        }
+
+        .step.animate-exhale {
+            animation-name: exhale;
+            animation-duration: 19s;
+            animation-timing-function: ease-in-out;
+            animation-iteration-count: infinite;
+        }
+
+
+        @keyframes exhale {
+            0%, 58%, 100% {
+                color: var(--inactive-color);
+                background-color: transparent;
+            }
+
+            63%, 95% {
+                color: var(--text-color);
+                background-color: var(--dark-accent);
+            }
+        }
+
+
+
+    </style>
 </head>
 
 <body>
-  <div class="controls hidden" id="controls">
+  <div class="controls visible" id="controls">
     <div class="counter" id="count" onclick={resetCounter()}></div>
-      <div class="step" id="step1">
+      <div class="step animate-inhale" id="step1">
           <div class="title">inhale</div>
-          <div class="duration w40"></div>
+          <div class="duration"></div>
           4s
       </div>
-      <div class="step" id="step2">
+      <div class="step animate-hold" id="step2">
           <div class="title">hold</div>
-          <div class="duration w70"></div>
+          <div class="duration"></div>
           7s
       </div>
-      <div class="step" id="step3">
+      <div class="step animate-exhale" id="step3">
           <div class="title">exhale</div>
-          <div class="duration w80"></div>
+          <div class="duration"></div>
           8s
       </div>
   </div>
-  <div class="circle intro" id="circle"></div>
+  <div class="circle animated" id="circle"></div>
+  <script>
+      let counter = 0;
+      let interval = undefined;
+
+      function count() {
+          document.getElementById("count").textContent = counter;
+          counter++;
+      }
+
+      function resetCounter() {
+          // reset circle animation
+          const e = document.getElementById("circle");
+          e.style.animation = 'none';
+          e.offsetHeight; /* trigger reflow */
+          e.style.animation = null;
+
+          // reset steps animation
+          Array.from(document.getElementsByClassName("step")).forEach(step => {
+              step.style.animation = 'none';
+              step.offsetHeight; /* trigger reflow */
+              step.style.animation = null;
+          })
+
+          // reset counter
+          counter = 0;
+          clearInterval(interval);
+          count();
+          interval = setInterval(count, 19000);
+      }
+
+      count(); // start counter
+      interval = setInterval(count, 19000);
+  </script>
 </body>
 
 </html>
