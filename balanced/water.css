@@ -8,45 +8,50 @@
     }
 }
 
-.step .duration.w55 {
-    width: 55px;
-}
-
-.step.animate-inhale {
-    animation-name: inhale;
+.step .duration.animate55 {
+    animation-name: change-width55;
     animation-duration: 11s;
     animation-timing-function: ease-in-out;
     animation-iteration-count: infinite;
 }
 
-.step.animate-exhale {
-    animation-name: exhale;
-    animation-duration: 11s;
+.animation-delay55 {
     animation-delay: 5.5s;
+}
+
+
+@keyframes change-width55 {
+    0% {
+        opacity: 1;
+        width: 0;
+    }
+
+    50% {
+        opacity: 1;
+        width: 100px;
+    }
+
+    60%, 100% {
+        opacity: 0;
+        width: 100px;
+    }
+}
+
+.step.animate-color {
+    animation-name: change-color;
+    animation-duration: 11s;
     animation-timing-function: ease-in-out;
     animation-iteration-count: infinite;
 }
 
-@keyframes inhale {
+@keyframes change-color {
     0%, 60%, 100% {
-        color: var(--inactive-color);
+        /*color: var(--inactive-color);*/
         background-color: transparent;
     }
 
     10%, 50% {
-        color: var(--text-color);
-        background-color: var(--dark-accent);
-    }
-}
-
-@keyframes exhale {
-    0%, 60%, 100% {
-        color: var(--inactive-color);
-        background-color: transparent;
-    }
-
-    10%, 50% {
-        color: var(--text-color);
+        /*color: var(--text-color);*/
         background-color: var(--dark-accent);
     }
 }

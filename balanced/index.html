@@ -11,20 +11,20 @@
 </head>
 
 <body>
-  <div class="controls hidden" id="controls">
+  <div class="controls visible" id="controls">
     <div class="counter" id="count" onclick={resetCounter()}></div>
-      <div class="step" id="step1">
+      <div class="step animate-color" id="step1">
           <div class="title">inhale</div>
-          <div class="duration w55"></div>
+          <div class="duration animate55"></div>
           5.5s
       </div>
-      <div class="step" id="step2">
+      <div class="step animate-color animation-delay55" id="step2">
           <div class="title">exhale</div>
-          <div class="duration w55"></div>
+          <div class="duration animate55 animation-delay55"></div>
           5.5s
       </div>
   </div>
-  <div class="circle intro" id="circle"></div>
+  <div class="circle animated" id="circle"></div>
 </body>
 
 </html>

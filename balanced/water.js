@@ -8,6 +8,7 @@ function count() {
 
 function resetCounter() {
     // reset circle animation
+    // todo reflow step and duration
     const e = document.getElementById("circle");
     e.style.animation = 'none';
     e.offsetHeight; /* trigger reflow */
@@ -27,20 +28,5 @@ function resetCounter() {
     interval = setInterval(count, 11000);
 }
 
-setTimeout(() => {
-    // change hidden elements to visible
-    document.getElementById("controls").classList.remove("hidden");
-    document.getElementById("controls").classList.add("visible");
-
-    // change circle from init animation to breath animation
-    document.getElementById("circle").classList.remove("intro");
-    document.getElementById("circle").classList.add("animated");
-
-    // start step animation
-    document.getElementById("step1").classList.add("animate-inhale");
-    document.getElementById("step2").classList.add("animate-exhale");
-
-    // start counter
-    count();
-    interval = setInterval(count, 11000);
-}, 5000)
+count();
+interval = setInterval(count, 11000);

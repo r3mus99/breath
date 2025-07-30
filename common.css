@@ -47,7 +47,8 @@ body {
 }
 
 .controls .counter {
-    background-color: var(--accent-color);
+    background-color: #5d3d7b;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     cursor: pointer;
     height: 3rem;
     line-height: 3rem;
