@@ -40,7 +40,7 @@ h1 {
 /* Description */
 .content p {
     color: #aaa;
-    margin-bottom: 2rem;
+    margin: 1rem;
 }
 
 /* Link Buttons */
@@ -54,15 +54,17 @@ h1 {
 a {
     text-decoration: none;
     color: white;
-    border: 2px solid #AC94C9;
-    padding: 0.75rem 1.5rem;
+    border: 2px solid var(--accent-color);
+    padding: 1rem 2rem;
     border-radius: 8px;
     font-weight: bold;
-    transition: background 0.3s ease;
+    transition: all 0.3s ease;
 }
 
 a:hover {
-    background: #7954A6;
+    background-color: var(--dark-accent);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(187, 144, 233, 0.3);
 }
 
 footer {

@@ -1,10 +1,9 @@
-let water = 0;
+let counter = 0;
 let interval = undefined;
 
 function count() {
-    const text = water < 10 ? '0' + water : water.toString();
-    document.getElementById("count").textContent = text;
-    water++;
+    document.getElementById("count").textContent = counter;
+    counter++;
 }
 
 function resetCounter() {
@@ -15,27 +14,20 @@ function resetCounter() {
     e.style.animation = null;
 
     // reset steps animation
-    const s1 = document.getElementById("step1");
-    s1.style.animation = 'none';
-    s1.offsetHeight; /* trigger reflow */
-    s1.style.animation = null;
-
-    const s2 = document.getElementById("step2");
-    s2.style.animation = 'none';
-    s2.offsetHeight; /* trigger reflow */
-    s2.style.animation = null;
+    Array.from(document.getElementsByClassName("step")).forEach(step => {
+        step.style.animation = 'none';
+        step.offsetHeight; /* trigger reflow */
+        step.style.animation = null;
+    })
 
     // reset counter
-    water = 0;
+    counter = 0;
     clearInterval(interval);
     count();
     interval = setInterval(count, 11000);
 }
 
 setTimeout(() => {
-    // change body background to black (white only for init)
-    // document.body.style.backgroundColor = 'black';
-
     // change hidden elements to visible
     document.getElementById("controls").classList.remove("hidden");
     document.getElementById("controls").classList.add("visible");
