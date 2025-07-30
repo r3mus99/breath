@@ -1,17 +1,19 @@
 <!DOCTYPE html>
 <html lang="sk">
-
 <head>
     <meta charset="utf-8">
     <title>Water</title>
-
     <link rel="stylesheet" href="../common.css">
     <style>
         .circle.animated {
+            animation: breath 11s infinite ease-in-out;
             animation-duration: 11s;
         }
 
         @keyframes breath {
+            0%, 100% {
+                transform: scale(1);
+            }
             50% {
                 transform: scale(2.0);
             }
@@ -28,18 +30,15 @@
             animation-delay: 5.5s;
         }
 
-
         @keyframes change-width55 {
             0% {
                 opacity: 1;
                 width: 0;
             }
-
             50% {
                 opacity: 1;
                 width: 100px;
             }
-
             60%, 100% {
                 opacity: 0;
                 width: 100px;
@@ -55,67 +54,100 @@
 
         @keyframes change-color {
             0%, 60%, 100% {
-                /*color: var(--inactive-color);*/
                 background-color: transparent;
             }
-
             10%, 50% {
-                /*color: var(--text-color);*/
                 background-color: var(--dark-accent);
             }
         }
     </style>
 </head>
-
 <body>
-  <div class="controls visible" id="controls">
-    <div class="counter" id="count" onclick={resetCounter()}></div>
-      <div class="step animate-color" id="step1">
-          <div class="title">inhale</div>
-          <div class="duration animate55"></div>
-          5.5s
-      </div>
-      <div class="step animate-color animation-delay55" id="step2">
-          <div class="title">exhale</div>
-          <div class="duration animate55 animation-delay55"></div>
-          5.5s
-      </div>
-  </div>
-  <div class="circle animated" id="circle"></div>
-  <script>
-      let counter = 0;
-      let interval = undefined;
+<div class="controls visible" id="controls">
+    <div class="counter" id="count" onclick="resetCounter()"></div>
+    <div class="step animate-color" id="step1">
+        <div class="title">inhale</div>
+        <div class="duration animate55"></div>
+        5.5s
+    </div>
+    <div class="step animate-color animation-delay55" id="step2">
+        <div class="title">exhale</div>
+        <div class="duration animate55 animation-delay55"></div>
+        5.5s
+    </div>
+</div>
+<div class="circle animated" id="circle"></div>
 
-      function count() {
-          document.getElementById("count").textContent = counter;
-          counter++;
-      }
+<script>
+    class BreathingCounter {
+        constructor() {
+            this.counter = 0;
+            this.interval = null;
+            this.animationDuration = 11000; // 11 seconds in ms
 
-      function resetCounter() {
-          // reset circle animation
-          // todo reflow step and duration
-          const e = document.getElementById("circle");
-          e.style.animation = 'none';
-          e.offsetHeight; /* trigger reflow */
-          e.style.animation = null;
+            this.elements = {
+                counter: document.getElementById("count"),
+                circle: document.getElementById("circle"),
+                steps: document.getElementsByClassName("step"),
+                durations: document.getElementsByClassName("duration")
+            };
 
-          // reset steps animation
-          Array.from(document.getElementsByClassName("step")).forEach(step => {
-              step.style.animation = 'none';
-              step.offsetHeight; /* trigger reflow */
-              step.style.animation = null;
-          })
+            this.init();
+        }
 
-          // reset counter
-          counter = 0;
-          clearInterval(interval);
-          count();
-          interval = setInterval(count, 11000);
-      }
+        init() {
+            this.updateCounterElement();
+            this.startInterval();
+        }
 
-      count();
-      interval = setInterval(count, 11000);
-  </script>
+        updateCounterElement() {
+            this.elements.counter.textContent = this.counter;
+        }
+
+        incrementCounter() {
+            this.counter++;
+            this.updateCounterElement();
+        }
+
+        resetAnimations() {
+            this.resetElementAnimation(this.elements.circle);
+            Array.from(this.elements.steps).forEach(step => this.resetElementAnimation(step));
+            Array.from(this.elements.durations).forEach(step => this.resetElementAnimation(step));
+        }
+
+        resetElementAnimation(element) {
+            element.style.animation = 'none';
+            element.offsetHeight; // Trigger reflow
+            element.style.animation = null;
+        }
+
+        startInterval() {
+            this.clearInterval();
+            this.interval = setInterval(() => {
+                this.incrementCounter();
+            }, this.animationDuration);
+        }
+
+        clearInterval() {
+            if (this.interval) {
+                clearInterval(this.interval);
+                this.interval = null;
+            }
+        }
+
+        reset() {
+            this.counter = 0;
+            this.resetAnimations();
+            this.updateCounterElement();
+            this.startInterval();
+        }
+    }
+
+    const breathingCounter = new BreathingCounter();
+
+    function resetCounter() {
+        breathingCounter.reset();
+    }
+</script>
 </body>
-
 </html>

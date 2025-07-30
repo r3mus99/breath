@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="sk">
-
 <head>
     <meta charset="utf-8">
     <title>Whisky</title>
@@ -14,7 +13,6 @@
             21% {
                 transform: scale(2.0);
             }
-
             58% {
                 transform: scale(2.0);
             }
@@ -32,12 +30,10 @@
                 opacity: 1;
                 width: 0;
             }
-
             21% {
                 opacity: 1;
                 width: 100px;
             }
-
             26%, 100% {
                 opacity: 0;
                 width: 100px;
@@ -56,12 +52,10 @@
                 opacity: 1;
                 width: 0;
             }
-
             58% {
                 opacity: 1;
                 width: 100px;
             }
-
             63%, 100% {
                 opacity: 0;
                 width: 100px;
@@ -80,18 +74,15 @@
                 opacity: 1;
                 width: 0;
             }
-
             95% {
                 opacity: 1;
                 width: 100px;
             }
-
             100% {
                 opacity: 0;
                 width: 100px;
             }
         }
-
 
         .step.animate-inhale {
             animation-name: inhale;
@@ -105,7 +96,6 @@
                 color: var(--inactive-color);
                 background-color: transparent;
             }
-
             5%, 21% {
                 color: var(--text-color);
                 background-color: var(--dark-accent);
@@ -124,7 +114,6 @@
                 color: var(--inactive-color);
                 background-color: transparent;
             }
-
             26%, 58% {
                 color: var(--text-color);
                 background-color: var(--dark-accent);
@@ -138,77 +127,109 @@
             animation-iteration-count: infinite;
         }
 
-
         @keyframes exhale {
             0%, 58%, 100% {
                 color: var(--inactive-color);
                 background-color: transparent;
             }
-
             63%, 95% {
                 color: var(--text-color);
                 background-color: var(--dark-accent);
             }
         }
-
-
-
     </style>
 </head>
-
 <body>
-  <div class="controls visible" id="controls">
-    <div class="counter" id="count" onclick={resetCounter()}></div>
-      <div class="step animate-inhale" id="step1">
-          <div class="title">inhale</div>
-          <div class="duration"></div>
-          4s
-      </div>
-      <div class="step animate-hold" id="step2">
-          <div class="title">hold</div>
-          <div class="duration"></div>
-          7s
-      </div>
-      <div class="step animate-exhale" id="step3">
-          <div class="title">exhale</div>
-          <div class="duration"></div>
-          8s
-      </div>
-  </div>
-  <div class="circle animated" id="circle"></div>
-  <script>
-      let counter = 0;
-      let interval = undefined;
+<div class="controls visible" id="controls">
+    <div class="counter" id="count" onclick="resetCounter()"></div>
+    <div class="step animate-inhale" id="step1">
+        <div class="title">inhale</div>
+        <div class="duration"></div>
+        4s
+    </div>
+    <div class="step animate-hold" id="step2">
+        <div class="title">hold</div>
+        <div class="duration"></div>
+        7s
+    </div>
+    <div class="step animate-exhale" id="step3">
+        <div class="title">exhale</div>
+        <div class="duration"></div>
+        8s
+    </div>
+</div>
+<div class="circle animated" id="circle"></div>
 
-      function count() {
-          document.getElementById("count").textContent = counter;
-          counter++;
-      }
+<script>
+    class WhiskyBreathingCounter {
+        constructor() {
+            this.counter = 0;
+            this.interval = null;
+            this.animationDuration = 19000; // 19 seconds in ms
 
-      function resetCounter() {
-          // reset circle animation
-          const e = document.getElementById("circle");
-          e.style.animation = 'none';
-          e.offsetHeight; /* trigger reflow */
-          e.style.animation = null;
+            this.elements = {
+                counter: document.getElementById("count"),
+                circle: document.getElementById("circle"),
+                steps: document.getElementsByClassName("step"),
+                durations: document.getElementsByClassName("duration")
+            };
 
-          // reset steps animation
-          Array.from(document.getElementsByClassName("step")).forEach(step => {
-              step.style.animation = 'none';
-              step.offsetHeight; /* trigger reflow */
-              step.style.animation = null;
-          })
+            this.init();
+        }
 
-          // reset counter
-          counter = 0;
-          clearInterval(interval);
-          count();
-          interval = setInterval(count, 19000);
-      }
+        init() {
+            this.updateDisplay();
+            this.startInterval();
+        }
 
-      count(); // start counter
-      interval = setInterval(count, 19000);
-  </script>
+        updateDisplay() {
+            this.elements.counter.textContent = this.counter;
+        }
+
+        incrementCounter() {
+            this.counter++;
+            this.updateDisplay();
+        }
+
+        resetAnimations() {
+            this.resetElementAnimation(this.elements.circle);
+            Array.from(this.elements.steps).forEach(step => this.resetElementAnimation(step));
+            Array.from(this.elements.durations).forEach(step => this.resetElementAnimation(step));
+        }
+
+        resetElementAnimation(element) {
+            element.style.animation = 'none';
+            element.offsetHeight; // Trigger reflow
+            element.style.animation = null;
+        }
+
+        startInterval() {
+            this.clearInterval();
+            this.interval = setInterval(() => {
+                this.incrementCounter();
+            }, this.animationDuration);
+        }
+
+        clearInterval() {
+            if (this.interval) {
+                clearInterval(this.interval);
+                this.interval = null;
+            }
+        }
+
+        reset() {
+            this.resetAnimations();
+            this.counter = 0;
+            this.updateDisplay();
+            this.startInterval();
+        }
+    }
+
+    const whiskyBreathingCounter = new WhiskyBreathingCounter();
+
+    function resetCounter() {
+        whiskyBreathingCounter.reset();
+    }
+</script>
 </body>
-
 </html>
