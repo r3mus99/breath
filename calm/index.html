@@ -6,153 +6,87 @@
     <link rel="stylesheet" href="../common.css">
     <style>
         .circle.animated {
-            animation-duration: 19s;
+            animation: breath 19s ease-in-out infinite;
         }
 
         @keyframes breath {
-            21% {
-                transform: scale(2.0);
-            }
-            58% {
-                transform: scale(2.0);
+            21%, 58% {
+                transform: scale(2);
             }
         }
 
-        #step1 .duration {
-            animation-name: change-step1;
-            animation-duration: 19s;
-            animation-timing-function: ease-in-out;
-            animation-iteration-count: infinite;
+        .step[data-step="1"] {
+            animation: inhale 19s ease-in-out infinite;
         }
 
-        @keyframes change-step1 {
-            0% {
-                opacity: 1;
-                width: 0;
-            }
-            21% {
-                opacity: 1;
-                width: 100px;
-            }
-            26%, 100% {
-                opacity: 0;
-                width: 100px;
-            }
+        .step[data-step="2"] {
+            animation: hold 19s ease-in-out infinite;
         }
 
-        #step2 .duration {
-            animation-name: change-step2;
-            animation-duration: 19s;
-            animation-timing-function: ease-in-out;
-            animation-iteration-count: infinite;
+        .step[data-step="3"] {
+            animation: exhale 19s ease-in-out infinite;
         }
 
-        @keyframes change-step2 {
-            0%, 21% {
-                opacity: 1;
-                width: 0;
-            }
-            58% {
-                opacity: 1;
-                width: 100px;
-            }
-            63%, 100% {
-                opacity: 0;
-                width: 100px;
-            }
+        .step[data-step="1"] .duration {
+            animation: bar1 19s ease-in-out infinite;
         }
 
-        #step3 .duration {
-            animation-name: change-step3;
-            animation-duration: 19s;
-            animation-timing-function: ease-in-out;
-            animation-iteration-count: infinite;
+        .step[data-step="2"] .duration {
+            animation: bar2 19s ease-in-out infinite;
         }
 
-        @keyframes change-step3 {
-            0%, 58% {
-                opacity: 1;
-                width: 0;
-            }
-            95% {
-                opacity: 1;
-                width: 100px;
-            }
-            100% {
-                opacity: 0;
-                width: 100px;
-            }
-        }
-
-        .step.animate-inhale {
-            animation-name: inhale;
-            animation-duration: 19s;
-            animation-timing-function: ease-in-out;
-            animation-iteration-count: infinite;
+        .step[data-step="3"] .duration {
+            animation: bar3 19s ease-in-out infinite;
         }
 
         @keyframes inhale {
-            0%, 26%, 58%, 100% {
-                color: var(--inactive-color);
-                background-color: transparent;
-            }
-            5%, 21% {
-                color: var(--text-color);
-                background-color: var(--dark-accent);
-            }
-        }
-
-        .step.animate-hold {
-            animation-name: hold;
-            animation-duration: 19s;
-            animation-timing-function: ease-in-out;
-            animation-iteration-count: infinite;
+            0%, 26%, 58%, 100% { color: var(--inactive-color); background-color: transparent; }
+            5%, 21% { color: var(--text-color); background-color: var(--dark-accent); }
         }
 
         @keyframes hold {
-            0%, 21%, 63%, 100% {
-                color: var(--inactive-color);
-                background-color: transparent;
-            }
-            26%, 58% {
-                color: var(--text-color);
-                background-color: var(--dark-accent);
-            }
-        }
-
-        .step.animate-exhale {
-            animation-name: exhale;
-            animation-duration: 19s;
-            animation-timing-function: ease-in-out;
-            animation-iteration-count: infinite;
+            0%, 21%, 63%, 100% { color: var(--inactive-color); background-color: transparent; }
+            26%, 58% { color: var(--text-color); background-color: var(--dark-accent); }
         }
 
         @keyframes exhale {
-            0%, 58%, 100% {
-                color: var(--inactive-color);
-                background-color: transparent;
-            }
-            63%, 95% {
-                color: var(--text-color);
-                background-color: var(--dark-accent);
-            }
+            0%, 58%, 100% { color: var(--inactive-color); background-color: transparent; }
+            63%, 95% { color: var(--text-color); background-color: var(--dark-accent); }
+        }
+
+        @keyframes bar1 {
+            0% { opacity: 1; width: 0; }
+            21% { opacity: 1; width: 100px; }
+            26%, 100% { opacity: 0; width: 100px; }
+        }
+
+        @keyframes bar2 {
+            0%, 21% { opacity: 1; width: 0; }
+            58% { opacity: 1; width: 100px; }
+            63%, 100% { opacity: 0; width: 100px; }
+        }
+
+        @keyframes bar3 {
+            0%, 58% { opacity: 1; width: 0; }
+            95% { opacity: 1; width: 100px; }
+            100% { opacity: 0; width: 100px; }
         }
     </style>
 </head>
 <body>
 <div class="controls visible" id="controls">
     <div class="counter" id="count" onclick="resetCounter()"></div>
-    <div class="step animate-inhale" id="step1">
+    <div class="step" data-step="1">
         <div class="title">inhale</div>
         <div class="duration"></div>
         4s
     </div>
-    <div class="step animate-hold" id="step2">
+    <div class="step" data-step="2">
         <div class="title">hold</div>
         <div class="duration"></div>
         7s
     </div>
-    <div class="step animate-exhale" id="step3">
+    <div class="step" data-step="3">
         <div class="title">exhale</div>
         <div class="duration"></div>
         8s
@@ -161,74 +95,57 @@
 <div class="circle animated" id="circle"></div>
 
 <script>
-    class WhiskyBreathingCounter {
+    class BreathingCounter {
         constructor() {
             this.counter = 0;
             this.interval = null;
-            this.animationDuration = 19000; // 19 seconds in ms
+            this.duration = 19000;
 
-            this.elements = {
-                counter: document.getElementById("count"),
-                circle: document.getElementById("circle"),
-                steps: document.getElementsByClassName("step"),
-                durations: document.getElementsByClassName("duration")
-            };
+            this.countEl = document.getElementById("count");
+            this.circle = document.getElementById("circle");
+            this.steps = document.querySelectorAll(".step, .duration");
 
-            this.init();
+            this.update();
+            this.start();
         }
 
-        init() {
-            this.updateDisplay();
-            this.startInterval();
+        update() {
+            this.countEl.textContent = this.counter;
         }
 
-        updateDisplay() {
-            this.elements.counter.textContent = this.counter;
-        }
-
-        incrementCounter() {
+        tick() {
             this.counter++;
-            this.updateDisplay();
+            this.update();
         }
 
         resetAnimations() {
-            this.resetElementAnimation(this.elements.circle);
-            Array.from(this.elements.steps).forEach(step => this.resetElementAnimation(step));
-            Array.from(this.elements.durations).forEach(step => this.resetElementAnimation(step));
+            [...this.steps, this.circle].forEach(el => {
+                el.style.animation = "none";
+                el.offsetHeight;
+                el.style.animation = "";
+            });
         }
 
-        resetElementAnimation(element) {
-            element.style.animation = 'none';
-            element.offsetHeight; // Trigger reflow
-            element.style.animation = null;
+        start() {
+            this.stop();
+            this.interval = setInterval(() => this.tick(), this.duration);
         }
 
-        startInterval() {
-            this.clearInterval();
-            this.interval = setInterval(() => {
-                this.incrementCounter();
-            }, this.animationDuration);
-        }
-
-        clearInterval() {
-            if (this.interval) {
-                clearInterval(this.interval);
-                this.interval = null;
-            }
+        stop() {
+            clearInterval(this.interval);
         }
 
         reset() {
-            this.resetAnimations();
             this.counter = 0;
-            this.updateDisplay();
-            this.startInterval();
+            this.resetAnimations();
+            this.update();
+            this.start();
         }
     }
 
-    const whiskyBreathingCounter = new WhiskyBreathingCounter();
-
+    const counter = new BreathingCounter();
     function resetCounter() {
-        whiskyBreathingCounter.reset();
+        counter.reset();
     }
 </script>
 </body>
