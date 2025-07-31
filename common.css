@@ -1,4 +1,4 @@
-/* CSS Variables */
+/* CSS Variables - Default Purple Theme */
 :root {
     --bg-color: #2c2c3e;
     --text-color: #fefefe;
@@ -6,6 +6,66 @@
     --accent-color: #BB90E9;
     --dark-accent: #5F31A2;
     --circle-fill: linear-gradient(20deg, #773DB9, #5F31A2);
+}
+
+/* Neon/Cyberpunk Theme */
+:root[data-theme="neon"] {
+    --bg-color: #0a0a0f;
+    --text-color: #ffffff;
+    --inactive-color: #1a1a2e;
+    --accent-color: #00ff88;
+    --dark-accent: #00cc6a;
+    --circle-fill: linear-gradient(135deg, #e6ff7a 0%, #a7ff60 100%);
+}
+
+/* Sunset Theme */
+:root[data-theme="sunset"] {
+    --bg-color: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --text-color: #ffffff;
+    --inactive-color: rgba(255, 255, 255, 0.3);
+    --accent-color: #ff6b6b;
+    --dark-accent: #ee5a52;
+    --circle-fill: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+}
+
+/* Ocean Theme */
+:root[data-theme="ocean"] {
+    --bg-color: linear-gradient(135deg, #667db6 0%, #0082c8 40%, #0082c8 60%, #667db6 100%);
+    --text-color: #ffffff;
+    --inactive-color: rgba(255, 255, 255, 0.4);
+    --accent-color: #4ecdc4;
+    --dark-accent: #44a08d;
+    --circle-fill: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+}
+
+/* Forest Theme */
+:root[data-theme="forest"] {
+    --bg-color: linear-gradient(135deg, #134e5e 0%, #71b280 100%);
+    --text-color: #ffffff;
+    --inactive-color: rgba(255, 255, 255, 0.4);
+    --accent-color: #7dd87d;
+    --dark-accent: #5cb85c;
+    --circle-fill: linear-gradient(135deg, #d4fc79 0%, #96e6a1 100%);
+}
+
+.theme-switcher {
+    top: 1rem;
+    right: 1rem;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    color: var(--text-color);
+    backdrop-filter: blur(5px);
+}
+
+.theme-switcher select {
+    margin-left: 0.5rem;
+    padding: 0.25rem;
+    border-radius: 4px;
+    border: none;
+    font-family: inherit;
+    font-size: 1rem;
+    color: var(--text-color);
+    background-color: var(--dark-accent);
 }
 
 /* General Reset & Body */
@@ -132,7 +192,7 @@ footer.delayed-fade {
 }
 
 .controls .counter {
-    background-color: #5d3d7b;
+    background-color: var(--dark-accent);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     cursor: pointer;
     height: 4rem;

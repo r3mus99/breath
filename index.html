@@ -15,10 +15,41 @@
             <a href="balanced/">Balanced (5.5s / 5.5s)</a>
             <a href="calm/">Deep Calm (4-7-8)</a>
         </div>
+        <div class="theme-switcher">
+            <label for="theme-select">🎨 Theme:</label>
+            <select id="theme-select">
+                <option value="default">Default</option>
+                <option value="neon">Neon</option>
+                <option value="sunset">Sunset</option>
+                <option value="ocean">Ocean</option>
+                <option value="forest">Forest</option>
+            </select>
+        </div>
     </div>
 
     <footer class="delayed-fade">
         Made with calm & code by <a href="https://github.com/r3mus99" style="color:#ccc;">@r3mus99</a>
     </footer>
+
+    <script>
+        const themeSelect = document.getElementById('theme-select');
+        const root = document.documentElement;
+
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme && savedTheme !== 'default') {
+            root.setAttribute('data-theme', savedTheme);
+            themeSelect.value = savedTheme;
+        }
+
+        themeSelect.addEventListener('change', () => {
+            const selected = themeSelect.value;
+            if (selected === 'default') {
+                root.removeAttribute('data-theme');
+            } else {
+                root.setAttribute('data-theme', selected);
+            }
+            localStorage.setItem('theme', selected);
+        });
+    </script>
 </body>
 </html>
