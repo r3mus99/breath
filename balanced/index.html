@@ -38,7 +38,7 @@
         }
     </style>
 </head>
-<body>
+<body data-duration="11000">
 <div class="controls visible" id="controls">
     <div class="counter" id="count" onclick="resetCounter()"></div>
     <div class="step" id="step1">
@@ -51,64 +51,7 @@
     </div>
 </div>
 <div class="circle animated" id="circle"></div>
-
-<script>
-    class BreathingCounter {
-        constructor() {
-            this.counter = 0;
-            this.interval = null;
-            this.duration = 11000;
-
-            this.countEl = document.getElementById("count");
-            this.circle = document.getElementById("circle");
-            this.steps = document.querySelectorAll(".step, .duration");
-
-            this.update();
-            this.start();
-        }
-
-        update() {
-            this.countEl.textContent = this.counter;
-        }
-
-        tick() {
-            this.counter++;
-            this.update();
-        }
-
-        resetAnimations() {
-            this.steps.forEach(el => {
-                el.style.animation = "none";
-                el.offsetHeight;
-                el.style.animation = "";
-            });
-            this.circle.style.animation = "none";
-            this.circle.offsetHeight;
-            this.circle.style.animation = "";
-        }
-
-        start() {
-            this.stop();
-            this.interval = setInterval(() => this.tick(), this.duration);
-        }
-
-        stop() {
-            clearInterval(this.interval);
-        }
-
-        reset() {
-            this.counter = 0;
-            this.resetAnimations();
-            this.update();
-            this.start();
-        }
-    }
-
-    const breathing = new BreathingCounter();
-    function resetCounter() {
-        breathing.reset();
-    }
-</script>
+<script src="../breathing.js"></script>
 <script src="../theme.js"></script>
 </body>
 </html>
